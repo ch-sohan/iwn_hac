@@ -63,14 +63,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import com.gnits.iwn.R
 import com.gnits.iwn.ngoprofile.ui.theme.IwnTheme
 import com.mkrdeveloper.instagramuicompose.ui.theme.StoryHighlights
 import com.mkrdeveloper.instagramuicompose.ui.theme.TabRowIcons
 
 class NgoprofileActivity : ComponentActivity() {
+
+    private lateinit var viewModel: NgoProfileViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[NgoProfileViewModel::class.java]
         setContent {
             IwnTheme {
                 // A surface container using the 'background' color from the theme
@@ -78,7 +82,9 @@ class NgoprofileActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    profile()
+                    viewModel.fetchCategories()
+                    profileScreen()
+
                 }
             }
         }
