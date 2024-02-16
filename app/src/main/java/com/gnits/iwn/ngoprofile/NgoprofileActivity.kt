@@ -138,8 +138,6 @@ fun htxt(name:String){
             .padding(horizontal = 10.dp)
             .absolutePadding(right = 0.dp)
 
-
-
     )
 }
 
