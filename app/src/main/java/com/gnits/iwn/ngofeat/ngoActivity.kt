@@ -1,5 +1,7 @@
 package com.gnits.iwn.ngofeat
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
 import com.gnits.iwn.Post.Block
 import com.gnits.iwn.R
@@ -35,33 +39,36 @@ class ngoActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-               ngofetch()
+                    ngofetch(onVolunteerClick = {
+                        val url =
+                            "https://docs.google.com/forms/d/e/1FAIpQLSdx-_lbC1RVZdMZ_d0AQPiJgugydqnclB2qwzP2E1ubvWNjZw/viewform"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)
+                    })
                 }
             }
         }
     }
 }
 
-
-
-@Preview(showBackground = true)
 @Composable
-fun ngofetch() {
-Column(modifier=Modifier.fillMaxWidth()) {
-    Block()
-    Block("Environment Event")
-    AsyncImage(
-        model="https://www.wikiimpact.com/wp-content/uploads/2023/06/Environment.jpeg",
-        placeholder = painterResource(id = R.drawable.img_5),
-        contentDescription = "Medication",
-        modifier = Modifier.height(400.dp)
+fun ngofetch(onVolunteerClick: () -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Block()
+        Block("Environment Event")
+        AsyncImage(
+            model = "https://www.wikiimpact.com/wp-content/uploads/2023/06/Environment.jpeg",
+            placeholder = painterResource(id = R.drawable.img_5),
+            contentDescription = "Medication",
+            modifier = Modifier.height(400.dp)
 
-    )
-DateTimeScreen()
+        )
+        DateTimeScreen(onVolunteerClick)
+    }
 }
-}
+
 @Composable
-fun DateTimeScreen() {
+fun DateTimeScreen(onVolunteerClick: () -> Unit) {
 
     Column(
         modifier = Modifier
@@ -81,24 +88,24 @@ fun DateTimeScreen() {
             text = "Time:",
         )
         Text(
-            text ="9:00 A.M",
+            text = "9:00 A.M",
         )
         Spacer(modifier = Modifier.height(16.dp))
 
 
-        Row{
+        Row {
             Button(onClick = { /*TODO*/ }) {
                 Text(text = "Schedule")
             }
             Spacer(modifier = Modifier.padding(end = 150.dp))
-        Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { /*TODO*/ }) {
 
-            Text(text = "Impact")
-        }
+                Text(text = "Impact")
+            }
 
         }
         Button(
-            onClick = { /* TODO */ },
+            onClick = {onVolunteerClick()},
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text(text = "Volunteer")
