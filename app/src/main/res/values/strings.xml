@@ -3,4 +3,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="hello">Hey there</string>
     <string name="create_account">Create an account</string>
+    <string name="title_activity_signup_activityui">SignupActivityui</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_ngoprofile">NgoprofileActivity</string>
 </resources>
