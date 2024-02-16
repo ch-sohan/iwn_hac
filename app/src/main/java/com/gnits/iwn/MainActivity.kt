@@ -3,6 +3,7 @@ package com.gnits.iwn
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LoginUi()
+            LoginUi(onLoginClick =
             {
                 // Create and launch sign-in intent
                 val signInIntent = AuthUI.getInstance()
@@ -57,16 +58,33 @@ class MainActivity : ComponentActivity() {
                     .setAvailableProviders(providers)
                     .build()
                 signInLauncher.launch(signInIntent)
-            }
+            },
+                onLogoutClick = {
+                    AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener {
+                            // ...
+                        }
+                })
         }
 
     }
 }
     @Composable
-    fun LoginUi(onClick: ()-> Unit)
+    fun LoginUi(onLoginClick: ()-> Unit,onLogoutClick: ()-> Unit)
     {
-       Button(onClick = {onClick()}) {
-           Text(text = "NGO Login")
+        val user=FirebaseAuth.getInstance().currentUser
+        Column {
+           if (user==null) {
+               Button(onClick = { onLoginClick() }) {
+                   Text(text = "NGO Login")
+               }
+           }else {
+               Button(onClick = {onLogoutClick()}) {
+                   Text(text = "Logout")
+               }
+           }
+
        }
     }
 
