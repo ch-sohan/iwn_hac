@@ -12,6 +12,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.Comment
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Send
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -67,10 +76,33 @@ fun postaction() {
                 model = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.healthshots.com%2Fhealthshots%2Fen%2Fuploads%2F2022%2F05%2F11184715%2FYoga-for-weight-loss.jpg&tbnid=KdZQfZ4Gp3lB1M&vet=12ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy..i&imgrefurl=https%3A%2F%2Fwww.healthshots.com%2Ffitness%2Fstaying-fit%2Fhow-does-yoga-benefit-your-mind-body-and-soul%2F&docid=Ju-5PPwk9OiWHM&w=1600&h=900&q=yoga&ved=2ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy",
                 placeholder = painterResource(id = R.drawable.img),
                 contentDescription = "Medication",
-                modifier = Modifier.weight(400f).height(500.dp)
+                modifier = Modifier
+                    .height(300.dp)
 
             )
+        Row {
+            OutlinedHeartIcon()
+            OutlinedCommentIcon()
+            OutlinedShareIcon()
+            Spacer(modifier = Modifier.padding(end=200.dp))
+            OutlinedBookIcon()
+        }
+        Text(text="Yoga Workshop", fontSize = 18.sp)
+
+        Text(text = "Helps you focus on your practice and learn tools and techniques in a guided way")
+        Text(
+            text = "#Health and Social Care",
+            modifier = Modifier.padding(),
+            color = Color.Blue
+        )
+
+        Text(
+            text = "Liked by 20000",
+            modifier = Modifier.padding(),
+            color =BlockColors.Color2
+        )
         Spacer(modifier=Modifier.weight(1f))
+
         Row {
 
             AsyncImage(
@@ -149,4 +181,48 @@ object BlockColors {
     val Color6 = Color(180,238,180)
     val Color7 = Color(207,234,217)
     val Color8 = Color(238,221,130)
+}
+@Composable
+fun OutlinedHeartIcon() {
+    // Using the outlined heart icon
+    Icon(
+        imageVector = Icons.Outlined.Favorite,
+        contentDescription = null, // Set a meaningful description if needed
+        modifier = Modifier
+            .size(50.dp) // Adjust the size as needed
+            .padding(bottom = 10.dp) // Adjust padding as needed
+    )
+}
+@Composable
+fun OutlinedShareIcon() {
+    // Using the outlined heart icon
+    Icon(
+        imageVector = Icons.Outlined.Send,
+        contentDescription = null, // Set a meaningful description if needed
+        modifier = Modifier
+            .size(50.dp) // Adjust the size as needed
+            .padding(bottom = 10.dp) // Adjust padding as needed
+    )
+}
+@Composable
+fun OutlinedBookIcon() {
+    // Using the outlined heart icon
+    Icon(
+        imageVector = Icons.Outlined.Bookmark,
+        contentDescription = null, // Set a meaningful description if needed
+        modifier = Modifier
+            .size(50.dp) // Adjust the size as needed
+            .padding(bottom = 10.dp) // Adjust padding as needed
+    )
+}
+@Composable
+fun OutlinedCommentIcon() {
+    // Using the outlined heart icon
+    Icon(
+        imageVector = Icons.Outlined.Comment,
+        contentDescription = null, // Set a meaningful description if needed
+        modifier = Modifier
+            .size(50.dp) // Adjust the size as needed
+            .padding(bottom = 10.dp) // Adjust padding as needed
+    )
 }
