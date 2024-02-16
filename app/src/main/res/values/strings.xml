@@ -13,5 +13,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_ngoprofile">NgoprofileActivity</string>
     <string name="title_activity_post">PostActivity</string>
-
+    <string name="title_activity_donate">donateActivity</string>
+    <string name="title_activity_ngo">donateActivity</string>
 </resources>
