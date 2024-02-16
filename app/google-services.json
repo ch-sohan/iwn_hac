@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193673212016",
+    "project_id": "iwnhac",
+    "storage_bucket": "iwnhac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193673212016:android:0c557bdd273dc5f8b504b5",
+        "android_client_info": {
+          "package_name": "com.gnits.iwn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSKuRhjI4-xsD9_GCzopVRoPRjC2dfWJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
