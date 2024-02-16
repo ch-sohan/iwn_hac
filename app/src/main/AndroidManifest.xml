@@ -16,16 +16,16 @@
             android:name=".cat.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
-
-            android:name=".Post.PostActivity"
-            android:exported="false"
-            android:label="@string/title_activity_post"
-
             android:theme="@style/Theme.Iwn" />
         <activity
             android:name=".Login.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Iwn" />
+        <activity
+            android:name=".Post.PostActivity"
+            android:exported="false"
+            android:label="@string/title_activity_post"
             android:theme="@style/Theme.Iwn" />
         <activity
             android:name=".ngoprofile.NgoprofileActivity"
