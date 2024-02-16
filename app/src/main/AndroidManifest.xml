@@ -24,9 +24,16 @@
             android:theme="@style/Theme.Iwn" />
         <activity
             android:name=".ngoprofile.NgoprofileActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_ngoprofile"
-            android:theme="@style/Theme.Iwn" />
+            android:theme="@style/Theme.Iwn"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="false"
@@ -42,11 +49,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Iwn">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
