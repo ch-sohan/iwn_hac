@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,11 +28,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +42,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,24 +52,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import com.gnits.iwn.R
 import com.gnits.iwn.ngoprofile.ui.theme.IwnTheme
 import com.mkrdeveloper.instagramuicompose.ui.theme.StoryHighlights
 import com.mkrdeveloper.instagramuicompose.ui.theme.TabRowIcons
 
 class NgoprofileActivity : ComponentActivity() {
+
+    private lateinit var viewModel: NgoProfileViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[NgoProfileViewModel::class.java]
         setContent {
             IwnTheme {
                 // A surface container using the 'background' color from the theme
@@ -78,87 +79,50 @@ class NgoprofileActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    profile()
+                    val profileState=viewModel.profileState.collectAsState().value
+                    viewModel.fetchProfile()
+                    if(profileState.progressShown){
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize()
+                        )
+                    }else {
+                        profileScreen(profileState)
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun profile() {
-    Column(
-        modifier= Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(10.dp)
-    ){
-        Row(
-
-        )
-        {
-            htxt(name = "IWN")
-            Icon(
-                imageVector = Icons.Filled.ArrowDropDown,
-                contentDescription = null,
-                modifier = Modifier
-                    .background(Color.White)
-                    .size(20.dp)
-            )
-        }
-
-
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview4() {
-    IwnTheme {
-        //profile()
-        profileScreen()
-
-    }
-}
-@Composable
-fun htxt(name:String){
-    Text(
-        text="$name",
-        fontSize=20.sp,
-        fontWeight= FontWeight.Medium,
-        color=Color.White,
-        modifier= Modifier
-            .padding(horizontal = 10.dp)
-            .absolutePadding(right = 0.dp)
 
 
 
-    )
-}
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun profileScreen() {
+fun profileScreen(profileState: ProfileState) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopBar(modifier = Modifier)
         },
         content = { contentPadding ->
-            MainContent(modifier = Modifier.padding(contentPadding))
+            MainContent(profileState,modifier = Modifier.padding(contentPadding))
         }
     )
 }
 
 @Composable
-fun MainContent(modifier: Modifier) {
+fun MainContent(profileState: ProfileState, modifier: Modifier) {
     var selectedTabIndex by remember {
         mutableStateOf(0)
     }
     Column(modifier.fillMaxSize()) {
-        ProfileSection()
+        ProfileSection(profileState)
         Spacer(modifier = Modifier.height(20.dp))
         PostsTabView(onTabSelected = { index ->
             selectedTabIndex = index
@@ -231,7 +195,7 @@ fun PostsTabView(
 }
 
 @Composable
-fun ProfileSection(modifier: Modifier = Modifier) {
+fun ProfileSection(profileState: ProfileState,modifier:Modifier= Modifier) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(6.dp))
         Row(
@@ -249,10 +213,10 @@ fun ProfileSection(modifier: Modifier = Modifier) {
             FollowStatusBar(modifier = Modifier.weight(7f))
         }
         BioSection(
-            name = "Smile Foundation",
-            activityLabel = "Children's Education & Health",
-            description = "Established in 2002 \nworks as a catalyst in the cycle of change\nSupplementing government efforts\nAim to achieve the Sustainable Development Goals\n",
-            link = "https://www.smilefoundationindia.org/",
+            name = profileState.ngoname,
+            activityLabel = profileState.subCategory,
+            description = profileState.bio,
+            link = profileState.link,
             followers = buildAnnotatedString {
                 val boldStyle = SpanStyle(
                     fontWeight = FontWeight.Bold
