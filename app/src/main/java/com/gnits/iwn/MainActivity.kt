@@ -1,5 +1,6 @@
 package com.gnits.iwn
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,7 +17,9 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.gnits.iwn.Login.PostOfficeApp
+import com.gnits.iwn.Post.PostActivity
 import com.gnits.iwn.ui.theme.IwnTheme
+import com.gnits.iwn.view.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
@@ -33,6 +36,9 @@ class MainActivity : ComponentActivity() {
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser
             // ...
+            val intent = Intent(this@MainActivity, PostActivity::class.java)
+            startActivity(intent)
+            finish()
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -59,19 +65,17 @@ class MainActivity : ComponentActivity() {
                     .build()
                 signInLauncher.launch(signInIntent)
             },
-                onLogoutClick = {
-                    AuthUI.getInstance()
-                        .signOut(this)
-                        .addOnCompleteListener {
-                            // ...
-                        }
+                navigateTOHome = {
+                    val intent = Intent(this@MainActivity, PostActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 })
         }
 
     }
 }
     @Composable
-    fun LoginUi(onLoginClick: ()-> Unit,onLogoutClick: ()-> Unit)
+    fun LoginUi(onLoginClick: ()-> Unit,navigateTOHome: ()-> Unit)
     {
         val user=FirebaseAuth.getInstance().currentUser
         Column {
@@ -80,10 +84,11 @@ class MainActivity : ComponentActivity() {
                    Text(text = "NGO Login")
                }
            }else {
-               Button(onClick = {onLogoutClick()}) {
-                   Text(text = "Logout")
-               }
+               navigateTOHome()
+
+
            }
+
 
        }
     }

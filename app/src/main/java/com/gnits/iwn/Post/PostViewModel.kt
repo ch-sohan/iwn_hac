@@ -17,11 +17,11 @@ class PostViewModel:ViewModel() {
     fun fetchPosts() {
         _postState.value =PostState(progressShown =true)
         val db = Firebase.firestore
-        val docRef = db.collection("ngoprofile").document("1")
+        val docRef = db.collection("posts").document("1")
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    Log.d("NGO Profile", "DocumentSnapshot data: ${document.data}")
+                    Log.d("Posts", "DocumentSnapshot data: ${document.data}")
                     _postState.value= PostState(
                         type = document.getString("type") ?: "",
                         description = document.getString("description") ?: "",
