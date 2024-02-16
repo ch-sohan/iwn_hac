@@ -4,4 +4,5 @@
     <string name="hello">Hey there</string>
     <string name="create_account">Create an account</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_star">StarActivity</string>
 </resources>
