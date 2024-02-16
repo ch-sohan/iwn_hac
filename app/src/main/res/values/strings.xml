@@ -6,6 +6,9 @@
 
     <string name="title_activity_main">MainActivity</string>
 
+    <string name="title_activity_star">StarActivity</string>
+
+
     <string name="title_activity_signup_activityui">SignupActivityui</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_ngoprofile">NgoprofileActivity</string>
