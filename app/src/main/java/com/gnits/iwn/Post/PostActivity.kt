@@ -1,5 +1,7 @@
 package com.gnits.iwn.Post
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -58,7 +60,17 @@ class PostActivity : ComponentActivity() {
                                 .fillMaxSize()
                         )
                     }else {
-                        postaction(postState)
+                        postaction(postState, onDonateClicked = {
+                            val upiUri = Uri.parse("upi://pay?pa=example@upi&pn=Example%20Name&mc=123&tid=123456&tr=123456789&tn=Payment%20for%20something&am=10.00&cu=INR")
+                            val intent = Intent(Intent.ACTION_VIEW, upiUri)
+                            startActivity(intent)
+                        }, onVolunteerClicked = {
+                            val url = "https://www.example.com"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intent)
+
+                        }
+                        )
                     }
                 }
             }
@@ -68,7 +80,8 @@ class PostActivity : ComponentActivity() {
 
 
 @Composable
-fun postaction(postState: PostState) {
+fun postaction(postState: PostState,onDonateClicked: (String) -> Unit,
+               onVolunteerClicked: (String) -> Unit) {
     Column{
         Block()
         Block(" Post")

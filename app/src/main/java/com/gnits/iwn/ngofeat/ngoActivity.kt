@@ -20,13 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
 import com.gnits.iwn.Post.Block
 import com.gnits.iwn.R
+import com.gnits.iwn.congo.StarActivity
 import com.gnits.iwn.ngofeat.ui.theme.IwnTheme
 
 class ngoActivity : ComponentActivity() {
@@ -44,6 +42,9 @@ class ngoActivity : ComponentActivity() {
                             "https://docs.google.com/forms/d/e/1FAIpQLSdx-_lbC1RVZdMZ_d0AQPiJgugydqnclB2qwzP2E1ubvWNjZw/viewform"
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         startActivity(intent)
+                    },onImpactClicked={
+                        val intent = Intent(this@ngoActivity, StarActivity::class.java)
+                        startActivity(intent)
                     })
                 }
             }
@@ -52,7 +53,7 @@ class ngoActivity : ComponentActivity() {
 }
 
 @Composable
-fun ngofetch(onVolunteerClick: () -> Unit) {
+fun ngofetch(onVolunteerClick: () -> Unit,onImpactClicked:()->Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Block()
         Block("Environment Event")
@@ -63,12 +64,12 @@ fun ngofetch(onVolunteerClick: () -> Unit) {
             modifier = Modifier.height(400.dp)
 
         )
-        DateTimeScreen(onVolunteerClick)
+        DateTimeScreen(onVolunteerClick,onImpactClicked)
     }
 }
 
 @Composable
-fun DateTimeScreen(onVolunteerClick: () -> Unit) {
+fun DateTimeScreen(onVolunteerClick: () -> Unit, onImpactClicked: () -> Unit) {
 
     Column(
         modifier = Modifier
@@ -98,7 +99,7 @@ fun DateTimeScreen(onVolunteerClick: () -> Unit) {
                 Text(text = "Schedule")
             }
             Spacer(modifier = Modifier.padding(end = 150.dp))
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { onImpactClicked()}) {
 
                 Text(text = "Impact")
             }
