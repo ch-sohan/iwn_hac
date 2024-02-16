@@ -25,5 +25,19 @@ class NgoProfileViewModel :ViewModel(){
             }
     }
 
+    fun fetchPosts(){
+        val db = Firebase.firestore
+        db.collection("posts")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("Posts", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Posts", "Error getting documents.", exception)
+            }
+    }
+
 
 }
