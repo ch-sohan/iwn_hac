@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 class NgoProfileViewModel : ViewModel() {
     private val _profileState = MutableStateFlow<ProfileState>(ProfileState())
     val profileState: StateFlow<ProfileState> = _profileState
-
+    init {
+        fetchProfile()
+    }
     fun fetchCategories() {
         val db = Firebase.firestore
         db.collection("categories")

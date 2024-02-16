@@ -80,7 +80,6 @@ class NgoprofileActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val profileState=viewModel.profileState.collectAsState().value
-                    viewModel.fetchProfile()
                     if(profileState.progressShown){
                         CircularProgressIndicator(
                             modifier = Modifier

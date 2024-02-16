@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,19 +13,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.Comment
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Send
-import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,12 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import coil.compose.AsyncImage
 import com.gnits.iwn.Post.ui.theme.IwnTheme
 import com.gnits.iwn.R
 
 class PostActivity : ComponentActivity() {
+    private lateinit var viewModel: PostViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(this)[PostViewModel::class.java]
         super.onCreate(savedInstanceState)
         setContent {
             IwnTheme {
@@ -48,16 +49,26 @@ class PostActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                postaction()
+                    val postState=viewModel.postState.collectAsState().value
+                    viewModel.fetchPosts()
+                    if(postState.progressShown){
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize()
+                        )
+                    }else {
+                        postaction(postState)
+                    }
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+
 @Composable
-fun postaction() {
+fun postaction(postState: PostState) {
     Column{
         Block()
         Block(" Post")
@@ -87,17 +98,27 @@ fun postaction() {
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text="Yoga Workshop", fontSize = 18.sp)
+        Text(text=postState.title, fontSize = 18.sp)
 
-        Text(text = "Helps you focus on your practice and learn tools and techniques in a guided way")
+        Text(text = postState.description)
         Text(
-            text = "#Health and Social Care",
+            text = postState.category,
             modifier = Modifier.padding(),
             color = Color.Blue
         )
 
         Text(
-            text = "Liked by 20000",
+            text = postState.nooflikes.toString()+"likes",
+            modifier = Modifier.padding(),
+            color =BlockColors.Color2
+        )
+        Text(
+            text = postState.noofcomments.toString()+"comments",
+            modifier = Modifier.padding(),
+            color =BlockColors.Color2
+        )
+        Text(
+            text = postState.noofshares.toString()+"shares",
             modifier = Modifier.padding(),
             color =BlockColors.Color2
         )
@@ -106,7 +127,7 @@ fun postaction() {
         Row {
 
             AsyncImage(
-                model="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.rawpixel.com%2Fsearch%2Fhouse%2520icon&psig=AOvVaw1_fFKHki2E3tRE-5wgud-n&ust=1708186606437000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPDHg5GhsIQDFQAAAAAdAAAAABAE",
+                model="https://th.bing.com/th?id=OIP.Pw3Av1lYJIH3uPqX3axEzAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
                 placeholder = painterResource(id = R.drawable.img_1),
                 contentDescription = "Medication",
                 modifier = Modifier.height(50.dp)
@@ -114,7 +135,7 @@ fun postaction() {
             )
             Spacer(modifier = Modifier.padding(end = 40.dp))
             AsyncImage(
-                model="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngitem.com%2Fmiddle%2Fmwoxmm_search-icon-small-search-icons-hd-png-download%2F&psig=AOvVaw1_zIntFUktrkP9ZSifKvOy&ust=1708186894574000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPifo5qisIQDFQAAAAAdAAAAABAF",
+                model="https://th.bing.com/th?id=OIP._RTO9yp1xH5aQA0vS7fpHAHaHW&w=250&h=249&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
                 placeholder = painterResource(id = R.drawable.img_2),
                 contentDescription = "Medication",
                 modifier = Modifier.height(45.dp)
@@ -124,7 +145,7 @@ fun postaction() {
 
 
             AsyncImage(
-                model="https://www.google.com/imgres?imgurl=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F006%2F082%2F534%2Foriginal%2Fadd-button-flat-icon-vector.jpg&tbnid=uNapRIw1vswiaM&vet=12ahUKEwiZtf7ZorCEAxULbGwGHXosAawQMygLegQIARBg..i&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F6082534-add-button-flat-icon&docid=HlRLO2IintGonM&w=1920&h=1920&q=add%20icon%20in%20insta&ved=2ahUKEwiZtf7ZorCEAxULbGwGHXosAawQMygLegQIARBg",
+                model="https://static.vecteezy.com/system/resources/previews/006/082/534/original/add-button-flat-icon-vector.jpg",
                 placeholder = painterResource(id = R.drawable.img_3),
                 contentDescription = "Medication",
                 modifier = Modifier.height(45.dp)
@@ -133,7 +154,7 @@ fun postaction() {
             Spacer(modifier = Modifier.padding(end = 40.dp))
 
             AsyncImage(
-                model="https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.istockphoto.com%2Fid%2F1265127017%2Fvector%2Finstagramm-reels-icon-line-vector-illustration.jpg%3Fs%3D612x612%26w%3D0%26k%3D20%26c%3DnZnBU983UH35mAmwoxtJHyLVLNo6y-DG6BDDRc_t9HY%3D&tbnid=OcVBnKB-5lA_dM&vet=12ahUKEwjluo7Qo7CEAxU1amwGHXOiB2MQMygCegQIARBS..i&imgrefurl=https%3A%2F%2Fwww.istockphoto.com%2Fvector%2Finstagramm-reels-icon-line-vector-illustration-gm1265127017-370722742&docid=N7Zeez4cIxN1wM&w=612&h=612&q=video%20icon%20in%20insta&ved=2ahUKEwjluo7Qo7CEAxU1amwGHXOiB2MQMygCegQIARBS",
+                model="https://media.istockphoto.com/id/1265127017/vector/instagramm-reels-icon-line-vector-illustration.jpg?s=612x612&w=0&k=20&c=nZnBU983UH35mAmwoxtJHyLVLNo6y-DG6BDDRc_t9HY=",
                 placeholder = painterResource(id = R.drawable.img_4),
                 contentDescription = "Medication",
                 modifier = Modifier.height(45.dp)
@@ -141,7 +162,7 @@ fun postaction() {
             )
             Spacer(modifier = Modifier.padding(end = 40.dp))
             AsyncImage(
-                model = "https://www.freeiconspng.com/thumbs/report-icon/call-report-icon-3.png",
+                model = "https://images.healthshots.com/healthshots/en/uploads/2022/05/11184715/Yoga-for-weight-loss.jpg",
                 placeholder = painterResource(id = R.drawable.profile),
                 contentDescription = "Medication",
                 modifier = Modifier.height(40.dp)
