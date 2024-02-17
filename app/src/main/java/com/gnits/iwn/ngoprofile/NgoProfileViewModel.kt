@@ -52,11 +52,11 @@ class NgoProfileViewModel : ViewModel() {
                     _profileState.value= ProfileState(
                         ngoname = document.getString("ngoname") ?: "",
                         bio = document.getString("bio") ?: "",
-                        followersCount = document.get("followersCount") as? Int ?:0,
-                        followingCount = document.get("followingCount") as? Int ?:0,
+                        followersCount = document.getString("followersCount")?: "",
+                        followingCount = document.getString("followingCount")?: "",
                         link = document.getString("link") ?: "",
                         subCategory = document.getString("subCategory") ?: "",
-                        postCount = document.get("postCount") as? Int ?:0,
+                        postCount = document.getString("postCount")?: "",
                         progressShown = false,
 
                     )
@@ -76,10 +76,10 @@ class NgoProfileViewModel : ViewModel() {
 data class ProfileState(
     val ngoname: String = "",
     val bio: String = "",
-    val followersCount: Int = 0,
-    val followingCount: Int = 0,
+    val followersCount:String="",
+    val followingCount:String="",
     val link: String = "",
-    val postCount: Int = 0,
+    val postCount: String="",
     val subCategory: String = "",
     val progressShown: Boolean = false,
 )
