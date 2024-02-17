@@ -38,7 +38,7 @@ class StarActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                        WelcomeComponent()
                 }
             }
         }

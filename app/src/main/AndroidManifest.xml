@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -39,19 +41,20 @@
             android:theme="@style/Theme.Iwn" />
         <activity
             android:name=".Post.PostActivity"
-            android:exported="false"
-            android:label="@string/title_activity_post"
-            android:theme="@style/Theme.Iwn" />
-        <activity
-            android:name=".ngoprofile.NgoprofileActivity"
             android:exported="true"
-            android:label="@string/title_activity_ngoprofile"
-            android:theme="@style/Theme.Iwn">
+            android:label="@string/title_activity_post"
+            android:theme="@style/Theme.Iwn" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ngoprofile.NgoprofileActivity"
+            android:exported="true"
+            android:label="@string/title_activity_ngoprofile"
+            android:theme="@style/Theme.Iwn">
         </activity>
         <activity
             android:name=".view.home.HomeActivity"
