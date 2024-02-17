@@ -37,11 +37,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProvider
 import coil.compose.AsyncImage
 import com.gnits.iwn.Post.ui.theme.IwnTheme
 import com.gnits.iwn.R
 import com.gnits.iwn.congo.StarActivity
+import com.gnits.iwn.ngofeat.ngoActivity
 
 class PostActivity : ComponentActivity() {
     private lateinit var viewModel: PostViewModel
@@ -66,15 +68,15 @@ class PostActivity : ComponentActivity() {
                         LazyColumn {
                             items(postState.posts) {post ->
                                 when(post.type) {
-                                    "event" -> {
+                                    "Event" -> {
                                         EventPost(post = post, onVolunteerClicked = {
                                             // TODO : can add the link in firestore
-                                            val url = "https://www.example.com"
+                                            val url = "https://docs.google.com/forms/d/1ZDM9_dQMwicwNxYyhGt7vYKLEu9fBty8qhoeoJxKgMQ/edit"//form link
                                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                                             startActivity(intent)
                                         })
                                     }
-                                    "donation" -> {
+                                    "Donation" -> {
                                         DonationPost(
                                             post = post,
                                             onDonateClicked = {
@@ -89,7 +91,7 @@ class PostActivity : ComponentActivity() {
                                             }
                                         )
                                     }
-                                    "opportunity" -> {
+                                    "Opportunity" -> {
                                         OpportunityPost(post = post, onVolunteerClicked = {
                                             // TODO : can add the link in firestore
                                             val url = "https://www.example.com"
@@ -111,12 +113,10 @@ class PostActivity : ComponentActivity() {
 @Composable
 fun EventPost(
     post: Post,
-    onVolunteerClicked: (Post) -> Unit
+    onVolunteerClicked: (Post) -> Unit,
+
 ) {
     Column{
-        Block()
-        Block(" Post")
-        Block("",FontWeight.Normal,Color.White)
         Row {
 
             AsyncImage(
@@ -125,10 +125,10 @@ fun EventPost(
                 contentDescription = "Medication",
                 modifier = Modifier.height(40.dp)
             )
-            Text(text = "  Justin", fontSize = 30.sp)
+            Text(text = post.title, fontSize = 30.sp)
         }
         AsyncImage(
-            model = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.healthshots.com%2Fhealthshots%2Fen%2Fuploads%2F2022%2F05%2F11184715%2FYoga-for-weight-loss.jpg&tbnid=KdZQfZ4Gp3lB1M&vet=12ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy..i&imgrefurl=https%3A%2F%2Fwww.healthshots.com%2Ffitness%2Fstaying-fit%2Fhow-does-yoga-benefit-your-mind-body-and-soul%2F&docid=Ju-5PPwk9OiWHM&w=1600&h=900&q=yoga&ved=2ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy",
+            model = post.imageUrl,
             placeholder = painterResource(id = R.drawable.img),
             contentDescription = "Medication",
             modifier = Modifier
@@ -167,52 +167,15 @@ fun EventPost(
             color =BlockColors.Color2
         )
         Spacer(modifier=Modifier.weight(1f))
+        Row() {
+            Button(onClick = { onVolunteerClicked(post) }) {
+                Text(text = "Volunteer")
+            }
 
-        Row {
-
-            AsyncImage(
-                model="https://th.bing.com/th?id=OIP.Pw3Av1lYJIH3uPqX3axEzAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
-                placeholder = painterResource(id = R.drawable.img_1),
-                contentDescription = "Medication",
-                modifier = Modifier.height(50.dp)
-
-            )
-            Spacer(modifier = Modifier.padding(end = 40.dp))
-            AsyncImage(
-                model="https://th.bing.com/th?id=OIP._RTO9yp1xH5aQA0vS7fpHAHaHW&w=250&h=249&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
-                placeholder = painterResource(id = R.drawable.img_2),
-                contentDescription = "Medication",
-                modifier = Modifier.height(45.dp)
-
-            )
-            Spacer(modifier = Modifier.padding(end = 40.dp))
-
-
-            AsyncImage(
-                model="https://static.vecteezy.com/system/resources/previews/006/082/534/original/add-button-flat-icon-vector.jpg",
-                placeholder = painterResource(id = R.drawable.img_3),
-                contentDescription = "Medication",
-                modifier = Modifier.height(45.dp)
-
-            )
-            Spacer(modifier = Modifier.padding(end = 40.dp))
-
-            AsyncImage(
-                model="https://media.istockphoto.com/id/1265127017/vector/instagramm-reels-icon-line-vector-illustration.jpg?s=612x612&w=0&k=20&c=nZnBU983UH35mAmwoxtJHyLVLNo6y-DG6BDDRc_t9HY=",
-                placeholder = painterResource(id = R.drawable.img_4),
-                contentDescription = "Medication",
-                modifier = Modifier.height(45.dp)
-
-            )
-            Spacer(modifier = Modifier.padding(end = 40.dp))
-            AsyncImage(
-                model = "https://images.healthshots.com/healthshots/en/uploads/2022/05/11184715/Yoga-for-weight-loss.jpg",
-                placeholder = painterResource(id = R.drawable.profile),
-                contentDescription = "Medication",
-                modifier = Modifier.height(40.dp)
-            )
         }
+
     }
+
 }
 
 @Preview
@@ -278,6 +241,8 @@ fun DonationPost(
             Button(onClick = { onImpactClicked(post) }) {
                 Text(text = "Impact")
             }
+
+
         }
     }
 }
