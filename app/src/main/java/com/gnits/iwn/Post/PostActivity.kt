@@ -61,8 +61,7 @@ class PostActivity : ComponentActivity() {
                     if(postState.progressShown){
                         CircularProgressIndicator(
                             modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize()
+                                .padding(100.dp)
                         )
                     } else {
                         LazyColumn {
@@ -141,7 +140,7 @@ fun EventPost(
                 Text(
                     text = post.nooflikes.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
             Column() {
@@ -149,7 +148,7 @@ fun EventPost(
                 Text(
                     text = post.noofcomments.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
             Column() {
@@ -157,14 +156,14 @@ fun EventPost(
                 Text(
                     text = post.noofshares.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
 
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text=post.title, fontSize = 18.sp)
+        Text(text=post.title, fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
         Text(text = post.description)
         Text(
@@ -232,7 +231,7 @@ fun DonationPost(
                 Text(
                     text = post.nooflikes.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
             Column() {
@@ -240,7 +239,7 @@ fun DonationPost(
                 Text(
                     text = post.noofcomments.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
             Column() {
@@ -248,14 +247,14 @@ fun DonationPost(
                 Text(
                     text = post.noofshares.toString(),
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    color =BlockColors.Color2
+                    color =Color.Red
                 )
             }
 
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text=post.title, fontSize = 18.sp, modifier = Modifier.padding(horizontal = 5.dp))
+        Text(text=post.title, fontSize = 18.sp, modifier = Modifier.padding(horizontal = 5.dp), fontWeight = FontWeight.Medium)
 
         Text(text = post.description)
         Text(
@@ -326,7 +325,7 @@ fun OpportunityPost(
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text=post.title, fontSize = 18.sp)
+        Text(text=post.title, fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
         Text(text = post.description)
         Text(
@@ -435,7 +434,7 @@ fun PostWithActions(
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text=post.title, fontSize = 18.sp)
+        Text(text=post.title, fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
         Text(text = post.description)
         Text(
