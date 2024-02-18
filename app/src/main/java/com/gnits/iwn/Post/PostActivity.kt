@@ -115,17 +115,17 @@ fun EventPost(
     post: Post,
     onVolunteerClicked: (Post) -> Unit,
 
-) {
-    Column{
+    ) {
+    Column(modifier=Modifier.padding(horizontal = 5.dp)){
         Row {
 
             AsyncImage(
-                model = "https://www.freeiconspng.com/thumbs/report-icon/call-report-icon-3.png",
+                model = post.ngoImageUrl,
                 placeholder = painterResource(id = R.drawable.profile),
                 contentDescription = "Medication",
                 modifier = Modifier.height(40.dp)
             )
-            Text(text = post.title, fontSize = 30.sp)
+            Text(text = post.ngoName, fontSize = 30.sp)
         }
         AsyncImage(
             model = post.imageUrl,
@@ -136,9 +136,31 @@ fun EventPost(
 
         )
         Row {
-            OutlinedHeartIcon()
-            OutlinedCommentIcon()
-            OutlinedShareIcon()
+            Column() {
+                OutlinedHeartIcon()
+                Text(
+                    text = post.nooflikes.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+            Column() {
+                OutlinedCommentIcon()
+                Text(
+                    text = post.noofcomments.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+            Column() {
+                OutlinedShareIcon()
+                Text(
+                    text = post.noofshares.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
@@ -185,32 +207,55 @@ fun DonationPost(
     onDonateClicked: (Post) -> Unit = {},
     onImpactClicked: (Post) -> Unit = {}
 ) {
-    Column{
+    Column(
+        modifier=Modifier.padding(horizontal = 5.dp)
+    ){
         Row {
             AsyncImage(
-                model = "https://www.freeiconspng.com/thumbs/report-icon/call-report-icon-3.png",
+                model = post.ngoImageUrl,
                 placeholder = painterResource(id = R.drawable.profile),
                 contentDescription = "Medication",
                 modifier = Modifier.height(40.dp)
             )
-            Text(text = "  Justin", fontSize = 30.sp)
+            Text(text = post.ngoName, fontSize = 30.sp)
         }
         AsyncImage(
-            model = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.healthshots.com%2Fhealthshots%2Fen%2Fuploads%2F2022%2F05%2F11184715%2FYoga-for-weight-loss.jpg&tbnid=KdZQfZ4Gp3lB1M&vet=12ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy..i&imgrefurl=https%3A%2F%2Fwww.healthshots.com%2Ffitness%2Fstaying-fit%2Fhow-does-yoga-benefit-your-mind-body-and-soul%2F&docid=Ju-5PPwk9OiWHM&w=1600&h=900&q=yoga&ved=2ahUKEwi237Lvn7CEAxX5kGMGHdVFA98QMygCegQIARBy",
+            model = post.imageUrl,
             placeholder = painterResource(id = R.drawable.img),
             contentDescription = "Medication",
             modifier = Modifier
                 .height(300.dp)
-
         )
         Row {
-            OutlinedHeartIcon()
-            OutlinedCommentIcon()
-            OutlinedShareIcon()
+            Column() {
+                OutlinedHeartIcon()
+                Text(
+                    text = post.nooflikes.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+            Column() {
+                OutlinedCommentIcon()
+                Text(
+                    text = post.noofcomments.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+            Column() {
+                OutlinedShareIcon()
+                Text(
+                    text = post.noofshares.toString(),
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    color =BlockColors.Color2
+                )
+            }
+
             Spacer(modifier = Modifier.padding(end=200.dp))
             OutlinedBookIcon()
         }
-        Text(text=post.title, fontSize = 18.sp)
+        Text(text=post.title, fontSize = 18.sp, modifier = Modifier.padding(horizontal = 5.dp))
 
         Text(text = post.description)
         Text(
