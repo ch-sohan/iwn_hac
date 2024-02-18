@@ -33,10 +33,13 @@ class PostViewModel:ViewModel() {
                             imageUrl = document.getString("imageUrl") ?: "",
                             category = document.getString("category") ?: "",
                             noofcomments = document.getString("noofcomments") ?: "",
+                            ngoName = document.getString("ngoName") ?: "",
                             nooflikes = document.getString("nooflikes") ?: "",
                             noofshares = document.getString("noofshares") ?: "",
                             pointsearned = document.getString("pointsearned") ?: "",
-                            title = document.getString("title") ?: ""
+                            title = document.getString("title") ?: "",
+                            ngoImageUrl = document.getString("ngoImageUrl") ?: "",
+
                         )
                     )
                 }
@@ -63,6 +66,8 @@ data class Post(
     val nooflikes:String="",
     val noofshares:String="",
     val pointsearned:String="",
+    val ngoName:String="",
     val title:String="",
-    val type:String=""
+    val type:String="",
+    val ngoImageUrl:String="",
 )
